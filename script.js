@@ -19,7 +19,8 @@ const polyanets = async (url, rowValue, colValue, action) => {
         }),
         headers: {
             "Content-type": "application/json; charset=UTF-8"
-        }
+        },
+        mode: "no-cors"
     })
 
     const data = await response.json()
