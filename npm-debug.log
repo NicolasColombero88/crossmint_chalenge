@@ -1,0 +1,30 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install' ]
+2 info using npm@2.15.11
+3 info using node@v0.12.18
+4 verbose stack /usr/local/lib/node_modules/npm/node_modules/glob/node_modules/minimatch/minimatch.js:1
+4 verbose stack _dirname) { const minimatch = module.exports = (p, pattern, options = {}) => {
+4 verbose stack                                                                           ^^
+4 verbose stack SyntaxError: Unexpected token =>
+4 verbose stack     at exports.runInThisContext (vm.js:73:16)
+4 verbose stack     at Module._compile (module.js:443:25)
+4 verbose stack     at Object.Module._extensions..js (module.js:478:10)
+4 verbose stack     at Module.load (module.js:355:32)
+4 verbose stack     at Function.Module._load (module.js:310:12)
+4 verbose stack     at Module.require (module.js:365:17)
+4 verbose stack     at require (module.js:384:17)
+4 verbose stack     at Object.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/glob/glob.js:45:17)
+4 verbose stack     at Module._compile (module.js:460:26)
+4 verbose stack     at Object.Module._extensions..js (module.js:478:10)
+5 verbose cwd /Users/macbook/Library/Mobile Documents/com~apple~CloudDocs/Documents/GitHub/crossmint_challenge
+6 error Darwin 17.7.0
+7 error argv "node" "/usr/local/bin/npm" "install"
+8 error node v0.12.18
+9 error npm  v2.15.11
+10 error /usr/local/lib/node_modules/npm/node_modules/glob/node_modules/minimatch/minimatch.js:1
+10 error _dirname) { const minimatch = module.exports = (p, pattern, options = {}) => {
+10 error                                                                           ^^
+10 error Unexpected token =>
+11 error If you need help, you may report this error at:
+11 error     <https://github.com/npm/npm/issues>
+12 verbose exit [ 1, true ]
