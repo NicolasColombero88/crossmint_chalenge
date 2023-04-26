@@ -78,8 +78,8 @@ const myMegaverse = async() => {
         const  megaJson = await megaverse.json();
         const myMegaverse = megaJson.map.content;
 
-        for (let y = 0; y < myPolyanets.length; y++) {
-            for (let x = 0; x < myPolyanets[y].length; x++){        
+        for (let y = 0; y < myMegaverse.length; y++) {
+            for (let x = 0; x < myMegaverse[y].length; x++){        
                 myMegaverseCoord.push({row: y, column: x});
             };
         }
@@ -175,16 +175,16 @@ const addSoloon = async(url, id, rowValue, colValue, color) =>{
 
 
 
-const kill = async (target) => {
+const kill = async () => {
     for (const { row, column } of myMegaverseCoord) {
-       await new Promise(resolve => setTimeout(resolve, 800));
+       await new Promise(resolve => setTimeout(resolve, 50));
          await deathStar(urlAPI, candidateId, row, column, target);
    }
 }
 
 const deathStar = async(url, id, rowValue, colValue, target) =>{
     try {
-        const response = await fetch(`${url}/${target}`, {
+        const response = await fetch(`${url}/polyanet`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
