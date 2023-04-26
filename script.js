@@ -18,7 +18,7 @@ const polyanet = async(id, url, rowValue, colValue) => {
             body: JSON.stringify({
                 candidateId: id,
                 row : rowValue,
-                columb : colValue,
+                column : colValue,
             }),
             headers: {
                 "Content-type": "application/json; charset=UTF-8",
