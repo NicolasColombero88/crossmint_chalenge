@@ -73,6 +73,8 @@ const MegaverScan = async() => {
     }
 }
 
+
+
 //order to put the Polyanets
 const doPolyanets = async () => {
     for (const { row, column } of goalPolyCoords) {
@@ -98,7 +100,8 @@ const doSoloons = async () => {
 }
 
 
-//functions of orders
+
+//functions of each order
 const addPolyanet = async(url, id, rowValue, colValue) =>{
     try {
         const response = await fetch(`${url}/polyanets`, {
@@ -160,7 +163,7 @@ const addSoloon = async(url, id, rowValue, colValue, color) =>{
 
 
 
-//Scanning my megaverse map, to know the coord limits
+//Scanning my megaverse map, to know the coord limits. Needed to kill all elements
 const myMegaverse = async() => {
     try {
         const megaverse = await fetch(urlMyMap);
