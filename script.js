@@ -4,13 +4,11 @@ const urlAPI = 'https://challenge.crossmint.io/api';
 const urlGoal = `${urlAPI}/map/${candidateId}/goal`;
 const urlMyMap = `${urlAPI}/map/${candidateId}`;
 
+const myMegaverseCoord = [];
+
 const goalPolyCoords = [];
 const goalComethCoords = [];
 const goalSoloonCoords = [];
-
-const myPolyCoords = [];
-const myComethCoords = [];
-const mySoloonCoords = [];
 
 const MegaverScan = async() => {
     try {
@@ -18,14 +16,15 @@ const MegaverScan = async() => {
         const scanJson = await scanRes.json();
         const scanGroup = scanJson.goal;
 
-        console.log(scanGroup)
-
         for (let y = 0; y < scanGroup.length; y++) {
             for (let x = 0; x < scanGroup[y].length; x++){
                 
                 if (scanGroup[y][x] == 'POLYANET') {
+
                         goalPolyCoords.push({row: y, column: x});
+
                 } else if(scanGroup[y][x].endsWith('_COMETH')) {
+
                         switch (scanGroup[y][x]){
                             case 'UP_COMETH':
                                 goalComethCoords.push({row: y, column: x, direction: 'up'});
@@ -43,14 +42,26 @@ const MegaverScan = async() => {
                                 console.log('error')
                         }
                         
-                } else if (scanGroup[y][x].endsWith('_SOLOON')){
-                        goalSoloonCoords.push({row: y, column: x});
-                }
+                } else if(scanGroup[y][x].endsWith('_SOLOON')) {
 
-                if(scanGroup[y][x] == 'POLYANET') {
-                    goalPolyCoords.push({row: y, column: x});
-                }
+                    switch (scanGroup[y][x]){
+                        case 'BLUE_SOLOON':
+                            goalSoloonCoords.push({row: y, column: x, color: 'blue'});
+                        break;
+                        case 'RED_SOLOON':
+                            goalSoloonCoords.push({row: y, column: x, color: 'red'});
+                        break;
+                        case 'PURPLE_SOLOON':
+                            goalSoloonCoords.push({row: y, column: x, color: 'purple'});
+                        break;
+                        case 'WHITE_SOLOON':
+                            goalSoloonCoords.push({row: y, column: x, color: 'white'});
+                        break;
+                        default:
+                            console.log('error')
 
+                    }
+                }
             };
         }
 
@@ -61,24 +72,19 @@ const MegaverScan = async() => {
     }
 }
 
-const myPolyanets = async() => {
+const myMegaverse = async() => {
     try {
-        const res = await fetch(urlMyMap);
-        const polysCountsJson = await res.json();
-        const myPolyanets = polysCountsJson.map.content;
-
-        console.log(myPolyanets)
+        const megaverse = await fetch(urlMyMap);
+        const  megaJson = await megaverse.json();
+        const myMegaverse = megaJson.map.content;
 
         for (let y = 0; y < myPolyanets.length; y++) {
-            for (let x = 0; x < myPolyanets[y].length; x++){
-                
-                if(myPolyanets[y][x]) {
-                    myPolyCoords.push({row: y, column: x});
-                }
+            for (let x = 0; x < myPolyanets[y].length; x++){        
+                myMegaverseCoord.push({row: y, column: x});
             };
         }
 
-         return myPolyCoords
+         return myMegaverseCoord
 
     } catch (error) {
         console.log(error);
@@ -90,21 +96,23 @@ const doPolyanets = async () => {
         await new Promise(resolve => setTimeout(resolve, 800));
       await addPolyanet(urlAPI, candidateId, row, column);
     }
-  }
+}
 
-  const doComeths = async () => {
+const doComeths = async () => {
     for (const { row, column, direction } of goalComethCoords) {
         await new Promise(resolve => setTimeout(resolve, 800));
       await addCometh(urlAPI, candidateId, row, column, direction);
     }
-  }
+}
 
-  const deletePolyanets = async () => {
-     for (const { row, column } of myPolyCoords) {
+const doSoloons = async () => {
+    for (const { row, column, color } of goalSoloonCoords) {
         await new Promise(resolve => setTimeout(resolve, 800));
-          await killPolyanets(urlAPI, candidateId, row, column);
+      await addSoloon(urlAPI, candidateId, row, column, color);
     }
-  }
+}
+
+
 
 const addPolyanet = async(url, id, rowValue, colValue) =>{
     try {
@@ -139,16 +147,44 @@ const addCometh = async(url, id, rowValue, colValue, direct) =>{
                 "direction" : direct
             }),
         });
-        console.log('Polyanet added:', await response.text());
+        console.log('Cometh added:', await response.text());
     } catch (error) {
-        console.log('Error adding Polyanet:', error);
+        console.log('Error adding Cometh:', error);
+    }
+}
+
+const addSoloon = async(url, id, rowValue, colValue, color) =>{
+    try {
+        const response = await fetch(`${url}/soloons`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                "candidateId": id,
+                "row": rowValue,
+                "column": colValue,
+                "color" : color
+            }),
+        });
+        console.log('Soloon added:', await response.text());
+    } catch (error) {
+        console.log('Error adding Soloon:', error);
     }
 }
 
 
-const killPolyanets = async(url, id, rowValue, colValue) =>{
+
+const kill = async (target) => {
+    for (const { row, column } of myMegaverseCoord) {
+       await new Promise(resolve => setTimeout(resolve, 800));
+         await deathStar(urlAPI, candidateId, row, column, target);
+   }
+}
+
+const deathStar = async(url, id, rowValue, colValue, target) =>{
     try {
-        const response = await fetch(`${url}/polyanets`, {
+        const response = await fetch(`${url}/${target}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -159,9 +195,9 @@ const killPolyanets = async(url, id, rowValue, colValue) =>{
                 "column": colValue
             }),
         });
-        console.log('Polyanet killed:', await response.text());
+        console.log(`${target} killed:`, await response.text());
     } catch (error) {
-        console.log('Error killing Polyanet:', error);
+        console.log(`Error killing ${target}:`, error);
     }
 }
 
