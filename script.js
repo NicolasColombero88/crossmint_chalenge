@@ -2,18 +2,19 @@ const candidateId = '2e2f13a4-1ec3-4506-82bd-e1b58f81a31b';
 const urlAPI = 'https://challenge.crossmint.io/api'
 let data;
 
-const getGoal = async (url, id) => {
-    const response = await fetch(url + '/map/' + id + '/goal')
-    const data = await response.json()
-    console.log(data)
-    return data
-}
+// const getGoal = async (url, id) => {
+//     const response = await fetch(url + '/map/' + id + '/goal')
+//     const data = await response.json()
+//     console.log(data)
+//     return data
+// }
 
 
-const polyanets = async (url, rowValue, colValue, action) => {
+const polyanets = async (url, rowValue, colValue, action, id) => {
     const response = await fetch(url, {
         method: action,
         body: JSON.stringify({
+            candidateId: id,
             row : rowValue,
             columb : colValue,
         }),
@@ -28,5 +29,5 @@ const polyanets = async (url, rowValue, colValue, action) => {
     return data
 }
 
-getGoal(urlAPI, candidateId);
-polyanets(urlAPI, 1,1, 'POST');
+// getGoal(urlAPI, candidateId);
+polyanets(urlAPI, 1,1, 'POST', candidateId);
