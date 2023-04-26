@@ -1,33 +1,37 @@
 const candidateId = '2e2f13a4-1ec3-4506-82bd-e1b58f81a31b';
-const urlAPI = 'https://challenge.crossmint.io/api'
-let data;
+const urlAPI = 'https://challenge.crossmint.io/api';
+const urlGoal = `https://challenge.crossmint.io/api/map/${candidateId}/goal`;
 
-// const getGoal = async (url, id) => {
-//     const response = await fetch(url + '/map/' + id + '/goal')
-//     const data = await response.json()
+// const Universo = async() => {
+//     let resultado = await fetch (urlGoal);
+
+//     let data = await resultado.json()
 //     console.log(data)
-//     return data
 // }
 
+// Universo();
 
-const polyanets = async (url, rowValue, colValue, action, id) => {
-    const response = await fetch(url, {
-        method: action,
-        body: JSON.stringify({
-            candidateId: id,
-            row : rowValue,
-            columb : colValue,
-        }),
-        headers: {
-            "Content-type": "application/json; charset=UTF-8",
-        },
-        mode: "no-cors",
-    },)
+const polyanet = async(id, url, rowValue, colValue) => {
+    try{
+        const toDo = await fetch(`${url}/polyanets`, {
+            method: 'POST',
+            body: JSON.stringify({
+                candidateId: id,
+                row : rowValue,
+                columb : colValue,
+            }),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8",
+            },
+            mode: "no-cors",
+        })
 
-    const data = await response.json()
-
-    return data
+        let data = await toDo.json()
+        console.log(data)
+    } catch (error){
+       console.log(error)
+}
+    
 }
 
-// getGoal(urlAPI, candidateId);
-polyanets(urlAPI, 1,1, 'POST', candidateId);
+polyanet(candidateId, urlAPI, 4, 4)
