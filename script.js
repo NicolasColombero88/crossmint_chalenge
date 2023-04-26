@@ -10,6 +10,7 @@ const goalPolyCoords = [];
 const goalComethCoords = [];
 const goalSoloonCoords = [];
 
+//scanning the goal map and saving the data
 const MegaverScan = async() => {
     try {
         const scanRes = await fetch(urlGoal);
@@ -72,25 +73,7 @@ const MegaverScan = async() => {
     }
 }
 
-const myMegaverse = async() => {
-    try {
-        const megaverse = await fetch(urlMyMap);
-        const  megaJson = await megaverse.json();
-        const myMegaverse = megaJson.map.content;
-
-        for (let y = 0; y < myMegaverse.length; y++) {
-            for (let x = 0; x < myMegaverse[y].length; x++){        
-                myMegaverseCoord.push({row: y, column: x});
-            };
-        }
-
-         return myMegaverseCoord
-
-    } catch (error) {
-        console.log(error);
-    }
-}
-
+//order to put the Polyanets
 const doPolyanets = async () => {
     for (const { row, column } of goalPolyCoords) {
         await new Promise(resolve => setTimeout(resolve, 800));
@@ -98,6 +81,7 @@ const doPolyanets = async () => {
     }
 }
 
+//order to put the Comeths
 const doComeths = async () => {
     for (const { row, column, direction } of goalComethCoords) {
         await new Promise(resolve => setTimeout(resolve, 800));
@@ -105,6 +89,7 @@ const doComeths = async () => {
     }
 }
 
+//order to put the Soloons
 const doSoloons = async () => {
     for (const { row, column, color } of goalSoloonCoords) {
         await new Promise(resolve => setTimeout(resolve, 800));
@@ -113,7 +98,7 @@ const doSoloons = async () => {
 }
 
 
-
+//function
 const addPolyanet = async(url, id, rowValue, colValue) =>{
     try {
         const response = await fetch(`${url}/polyanets`, {
@@ -174,6 +159,25 @@ const addSoloon = async(url, id, rowValue, colValue, color) =>{
 }
 
 
+
+const myMegaverse = async() => {
+    try {
+        const megaverse = await fetch(urlMyMap);
+        const  megaJson = await megaverse.json();
+        const myMegaverse = megaJson.map.content;
+
+        for (let y = 0; y < myMegaverse.length; y++) {
+            for (let x = 0; x < myMegaverse[y].length; x++){        
+                myMegaverseCoord.push({row: y, column: x});
+            };
+        }
+
+         return myMegaverseCoord
+
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 const kill = async () => {
     for (const { row, column } of myMegaverseCoord) {
