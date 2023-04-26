@@ -98,7 +98,7 @@ const doSoloons = async () => {
 }
 
 
-//function
+//functions of orders
 const addPolyanet = async(url, id, rowValue, colValue) =>{
     try {
         const response = await fetch(`${url}/polyanets`, {
@@ -160,6 +160,7 @@ const addSoloon = async(url, id, rowValue, colValue, color) =>{
 
 
 
+//Scanning my megaverse map, to know the coord limits
 const myMegaverse = async() => {
     try {
         const megaverse = await fetch(urlMyMap);
@@ -179,6 +180,7 @@ const myMegaverse = async() => {
     }
 }
 
+//order to destroy all the megaverse
 const kill = async () => {
     for (const { row, column } of myMegaverseCoord) {
        await new Promise(resolve => setTimeout(resolve, 50));
@@ -186,6 +188,7 @@ const kill = async () => {
    }
 }
 
+//function to kill all
 const deathStar = async(url, id, rowValue, colValue, target) =>{
     try {
         const response = await fetch(`${url}/polyanet`, {
